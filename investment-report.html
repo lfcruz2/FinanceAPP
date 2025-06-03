@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance & Investment App - Investor Opportunity Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e3c72;
+            padding: 1rem 0;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c3e50;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav li {
+            margin: 0;
+        }
+        
+        .nav a {
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav a:hover, .nav a.active {
+            background: #f8f9fa;
+            border-bottom-color: #3498db;
+            color: #3498db;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Section Styles */
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .section h2 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .section h3 {
+            color: #2a5298;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section h4 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Key Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .metric-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .metric-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Persona Cards */
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .persona-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .persona-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .persona-card h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .persona-card .age {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive Table Container */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* Feature Table */
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            background: white;
+            min-width: 600px; /* Ensure minimum width for readability */
+        }
+        
+        .feature-table th {
+            background: #1e3c72;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .feature-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            word-wrap: break-word;
+        }
+        
+        .feature-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .priority {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .priority.mh {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .priority.sh {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .priority.ch {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        /* Mobile Table Cards */
+        .mobile-table-card {
+            display: none;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .mobile-table-card .card-header {
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .mobile-table-card .card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+        
+        .mobile-table-card .card-row:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-table-card .card-label {
+            font-weight: 500;
+            color: #6c757d;
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .mobile-table-card .card-value {
+            flex: 2;
+            text-align: right;
+        }
+        
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e9f3ff 100%);
+            border-left: 5px solid #3498db;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        
+        .highlight-box h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Opportunity Cards */
+        .opportunity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .opportunity-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+        
+        .opportunity-card h4 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+        
+        /* Competitive Analysis */
+        .competitor-comparison {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .competitor-comparison table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .competitor-comparison th {
+            background: #34495e;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        .competitor-comparison td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            word-wrap: break-word;
+        }
+        
+        /* MVP Features */
+        .mvp-features {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .mvp-features h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+        
+        .mvp-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .mvp-features li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .mvp-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: #3498db;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 1rem 2rem;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: calc(50% - 2rem);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px #3498db;
+        }
+        
+        .timeline-item:nth-child(odd)::before {
+            left: -32px;
+        }
+        
+        .timeline-item:nth-child(even)::before {
+            right: -32px;
+        }
+        
+        /* Call to Action */
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .cta h2 {
+            color: white;
+            border: none;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav ul.active {
+                display: flex;
+            }
+            
+            .nav li {
+                width: 100%;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .nav a {
+                padding: 1rem;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+            
+            .nav a:hover, .nav a.active {
+                border-left-color: #3498db;
+                border-bottom: none;
+            }
+            
+            .metrics-grid,
+            .personas-grid,
+            .opportunity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-card {
+                padding: 1.5rem;
+            }
+            
+            .metric-card h3 {
+                font-size: 2rem;
+            }
+            
+            /* Mobile table adjustments */
+            .table-container {
+                margin: 1rem 0;
+            }
+            
+            .feature-table {
+                display: none;
+            }
+            
+            .mobile-table-card {
+                display: block;
+            }
+            
+            .competitor-comparison table {
+                min-width: 600px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+            }
+            
+            .timeline-item::before {
+                left: -31px !important;
+            }
+            
+            .cta {
+                padding: 2rem 1rem;
+            }
+            
+            .cta p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-card {
+                padding: 1rem;
+            }
+            
+            .personas-grid,
+            .opportunity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .persona-card,
+            .opportunity-card {
+                padding: 1rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .nav, .hamburger {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .mobile-table-card {
+                display: none;
+            }
+            
+            .feature-table {
+                display: table !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Personal Finance & Investment Advisor App</h1>
+        <p>A Revolutionary AI-Powered Solution for the Next Generation of Investors</p>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">FinanceApp</div>
+            <div class="hamburger" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="#opportunity" class="active">Opportunity</a></li>
+                <li><a href="#market">Market Analysis</a></li>
+                <li><a href="#users">Target Users</a></li>
+                <li><a href="#solution">Our Solution</a></li>
+                <li><a href="#mvp">MVP Features</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#monetization">Monetization</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Executive Summary -->
+        <section class="section" id="opportunity">
+            <h2>Investment Opportunity</h2>
+            
+            <div class="highlight-box">
+                <h4>Executive Summary</h4>
+                <p>We are developing a next-generation personal finance and investment advisor app that leverages AI and Large Language Models (LLMs) to deliver personalized, accessible, and actionable financial guidance. Our solution addresses critical pain points in the $115+ billion personal finance app market, targeting tech-savvy investors who struggle with information overload, lack sophisticated tools, and seek trustworthy AI-driven advice.</p>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>$115.26B</h3>
+                    <p>Projected Market Size by 2033</p>
+                </div>
+                <div class="metric-card">
+                    <h3>20.57%</h3>
+                    <p>Annual Growth Rate (CAGR)</p>
+                </div>
+                <div class="metric-card">
+                    <h3>$17.75B</h3>
+                    <p>Current Market Value (2024)</p>
+                </div>
+                <div class="metric-card">
+                    <h3>71%</h3>
+                    <p>Users Want More Personalization</p>
+                </div>
+            </div>
+            
+            <h3>Core Value Proposition</h3>
+            <p>Our app bridges the gap between simple trading platforms and expensive advisory services by offering:</p>
+            <ul>
+                <li><strong>Sophisticated Analysis Made Simple:</strong> Advanced sector analysis and market insights delivered through an intuitive interface</li>
+                <li><strong>Truly Personalized Guidance:</strong> AI-driven recommendations based on individual portfolios, goals, and risk profiles</li>
+                <li><strong>Transparent, Explainable AI:</strong> Every recommendation comes with clear explanations, building trust and financial literacy</li>
+                <li><strong>Actionable Insights:</strong> Moving beyond data presentation to provide specific, implementable steps for portfolio optimization</li>
+            </ul>
+        </section>
+        
+        <!-- Market Analysis -->
+        <section class="section" id="market">
+            <h2>Market Analysis & Opportunity</h2>
+            
+            <h3>Market Dynamics</h3>
+            <p>The personal finance app market is experiencing explosive growth, driven by:</p>
+            <ul>
+                <li>Digital-native generations (Millennials and Gen Z) actively seeking financial control</li>
+                <li>Post-COVID acceleration in digital financial management adoption</li>
+                <li>Growing demand for AI-powered personalization and predictive analytics</li>
+                <li>Shift from passive tracking to active wealth generation strategies</li>
+            </ul>
+            
+            <h3>Key Market Gaps We Address</h3>
+            <div class="opportunity-grid">
+                <div class="opportunity-card">
+                    <h4>Accessible Sophistication</h4>
+                    <p>Users want advanced analytical tools without the complexity of professional platforms or high advisory fees. Our solution delivers institutional-grade insights through a consumer-friendly interface.</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>Genuine Personalization</h4>
+                    <p>Current apps offer generic advice. We provide deep personalization based on actual portfolio holdings, individual risk profiles, and specific financial goals.</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>Trust Through Transparency</h4>
+                    <p>Users distrust "black box" AI. Our explainable AI feature clearly articulates the reasoning behind every recommendation, building confidence and financial literacy.</p>
+                </div>
+            </div>
+            
+            <h3>Competitive Landscape</h3>
+            <div class="competitor-comparison">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Strengths</th>
+                            <th>Weaknesses</th>
+                            <th>Our Advantage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Robinhood</strong></td>
+                            <td>Simple interface, commission-free</td>
+                            <td>Limited analysis tools, poor support</td>
+                            <td>Advanced analytics with simplicity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wealthfront</strong></td>
+                            <td>Tax optimization, robo-advisory</td>
+                            <td>No human insight, limited customization</td>
+                            <td>AI explanations + personalization</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Betterment</strong></td>
+                            <td>Goal-based planning</td>
+                            <td>Generic recommendations</td>
+                            <td>Portfolio-specific insights</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Traditional Advisors</strong></td>
+                            <td>Human expertise</td>
+                            <td>High fees, limited accessibility</td>
+                            <td>AI-powered expertise at scale</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Target Users -->
+        <section class="section" id="users">
+            <h2>Target User Segments</h2>
+            
+            <div class="personas-grid">
+                <div class="persona-card">
+                    <h4>Alex Chen - The Eager Novice</h4>
+                    <p class="age">Age: 23 | Junior Graphic Designer</p>
+                    <p><strong>Goals:</strong> Save for a home, build emergency fund, grow money beyond savings account</p>
+                    <p><strong>Pain Points:</strong> Overwhelmed by jargon, worried about mistakes, limited capital</p>
+                    <p><strong>Quote:</strong> "I need something that explains things clearly and helps me invest smart, even with what little I have."</p>
+                </div>
+                
+                <div class="persona-card">
+                    <h4>Sarah Miller - The Ambitious Optimizer</h4>
+                    <p class="age">Age: 35 | Marketing Manager</p>
+                    <p><strong>Goals:</strong> Early retirement, optimize investments, fund children's education</p>
+                    <p><strong>Pain Points:</strong> No time for research, generic advice, worried about hidden fees</p>
+                    <p><strong>Quote:</strong> "I need smart, personalized insights that help me optimize my portfolio without huge advisory fees."</p>
+                </div>
+                
+                <div class="persona-card">
+                    <h4>David Lee - The Engaged DIY Investor</h4>
+                    <p class="age">Age: 48 | Software Engineer</p>
+                    <p><strong>Goals:</strong> Financial independence, find unique opportunities, continuous learning</p>
+                    <p><strong>Pain Points:</strong> Free tools lack depth, pro platforms too complex/expensive</p>
+                    <p><strong>Quote:</strong> "I need powerful, consolidated tools that give me analytical edge without the Wall Street price tag."</p>
+                </div>
+            </div>
+            
+            <h3>User Needs Analysis</h3>
+            <ul>
+                <li><strong>Information Synthesis:</strong> Users juggle 15-20 financial service providers and apps</li>
+                <li><strong>Actionable Guidance:</strong> 70% of users report frustration with apps that don't provide clear next steps</li>
+                <li><strong>Trust & Education:</strong> Gen Z trusts financial professionals but seeks digital-first solutions</li>
+                <li><strong>Time Efficiency:</strong> Busy professionals need insights that fit into their schedules</li>
+            </ul>
+        </section>
+        
+        <!-- Our Solution -->
+        <section class="section" id="solution">
+            <h2>Our Innovative Solution</h2>
+            
+            <h3>Core Features That Differentiate Us</h3>
+            
+            <!-- Desktop Table -->
+            <div class="table-container">
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Description</th>
+                            <th>User Value</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>AI-Powered Sector Analysis</strong></td>
+                            <td>Deep analysis of investment sectors with personalized insights based on user preferences</td>
+                            <td>Saves hours of research, provides institutional-grade insights</td>
+                            <td><span class="priority mh">Must Have</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Portfolio X-Ray</strong></td>
+                            <td>Identifies fund overlaps, hidden fees, and true diversification</td>
+                            <td>Reveals hidden inefficiencies, potential for significant savings</td>
+                            <td><span class="priority mh">Must Have</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>"Explain the Why" AI</strong></td>
+                            <td>LLM-powered explanations for every recommendation</td>
+                            <td>Builds trust, educates users, increases action likelihood</td>
+                            <td><span class="priority mh">Must Have</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Risk-Reality Alignment</strong></td>
+                            <td>Dynamic risk assessment that adapts to user behavior and market conditions</td>
+                            <td>Prevents emotional investing, ensures suitable strategies</td>
+                            <td><span class="priority sh">Should Have</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Goal-Based Tracking</strong></td>
+                            <td>Visual progress tracking with AI-powered nudges and adjustments</td>
+                            <td>Keeps users motivated and on track</td>
+                            <td><span class="priority sh">Should Have</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Mobile Cards -->
+            <div class="mobile-table-card">
+                <div class="card-header">AI-Powered Sector Analysis</div>
+                <div class="card-row">
+                    <div class="card-label">Description:</div>
+                    <div class="card-value">Deep analysis of investment sectors with personalized insights based on user preferences</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">User Value:</div>
+                    <div class="card-value">Saves hours of research, provides institutional-grade insights</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Priority:</div>
+                    <div class="card-value"><span class="priority mh">Must Have</span></div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">Portfolio X-Ray</div>
+                <div class="card-row">
+                    <div class="card-label">Description:</div>
+                    <div class="card-value">Identifies fund overlaps, hidden fees, and true diversification</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">User Value:</div>
+                    <div class="card-value">Reveals hidden inefficiencies, potential for significant savings</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Priority:</div>
+                    <div class="card-value"><span class="priority mh">Must Have</span></div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">"Explain the Why" AI</div>
+                <div class="card-row">
+                    <div class="card-label">Description:</div>
+                    <div class="card-value">LLM-powered explanations for every recommendation</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">User Value:</div>
+                    <div class="card-value">Builds trust, educates users, increases action likelihood</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Priority:</div>
+                    <div class="card-value"><span class="priority mh">Must Have</span></div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">Risk-Reality Alignment</div>
+                <div class="card-row">
+                    <div class="card-label">Description:</div>
+                    <div class="card-value">Dynamic risk assessment that adapts to user behavior and market conditions</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">User Value:</div>
+                    <div class="card-value">Prevents emotional investing, ensures suitable strategies</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Priority:</div>
+                    <div class="card-value"><span class="priority sh">Should Have</span></div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">Goal-Based Tracking</div>
+                <div class="card-row">
+                    <div class="card-label">Description:</div>
+                    <div class="card-value">Visual progress tracking with AI-powered nudges and adjustments</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">User Value:</div>
+                    <div class="card-value">Keeps users motivated and on track</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Priority:</div>
+                    <div class="card-value"><span class="priority sh">Should Have</span></div>
+                </div>
+            </div>
+            
+            <h3>Technology Innovation</h3>
+            <div class="highlight-box">
+                <h4>LLM Integration for Financial Guidance</h4>
+                <p>Our proprietary implementation of Large Language Models enables:</p>
+                <ul>
+                    <li>Natural language explanations of complex financial concepts</li>
+                    <li>Personalized investment rationales based on individual circumstances</li>
+                    <li>Real-time summarization of market news and analyst reports</li>
+                    <li>Conversational financial planning (post-MVP)</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- MVP Features -->
+        <section class="section" id="mvp">
+            <h2>MVP Strategy & Features</h2>
+            
+            <div class="mvp-features">
+                <h3>MVP Scope - Ready in 6 Months</h3>
+                <ul>
+                    <li>Secure onboarding with portfolio linking (Plaid integration)</li>
+                    <li>AI-powered analysis of 4 key sectors (Technology, Healthcare, Energy, Financials)</li>
+                    <li>Personalized portfolio recommendations with "Explain the Why" feature</li>
+                    <li>Portfolio health score and fund overlap detection</li>
+                    <li>Basic risk assessment and alignment checking</li>
+                    <li>Educational content integrated contextually</li>
+                </ul>
+            </div>
+            
+            <h3>User Journey Example</h3>
+            <ol>
+                <li><strong>Quick Setup:</strong> User links accounts and completes 5-minute profiling</li>
+                <li><strong>Instant Insights:</strong> Dashboard shows portfolio health score and key issues</li>
+                <li><strong>Sector Discovery:</strong> User explores AI-analyzed sectors matching their interests</li>
+                <li><strong>Clear Recommendations:</strong> "Reduce Energy allocation by 10% - here's why..."</li>
+                <li><strong>Trust Building:</strong> Tap "Explain this" for clear, personalized rationale</li>
+                <li><strong>Action:</strong> User implements advice with confidence</li>
+            </ol>
+        </section>
+        
+        <!-- Roadmap -->
+        <section class="section" id="roadmap">
+            <h2>Product Roadmap</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>MVP Launch (Month 6)</h4>
+                    <p>Core features, 4 sectors, basic personalization</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Horizon 1 (Months 6-12)</h4>
+                    <p>Direct trading, enhanced AI personalization, gamified learning</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Horizon 2 (Months 12-24)</h4>
+                    <p>LLM conversational advisor, tax optimization, community features</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Horizon 3 (24+ Months)</h4>
+                    <p>Holistic wealth management, social investing, embedded finance</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Monetization -->
+        <section class="section" id="monetization">
+            <h2>Monetization Strategy</h2>
+            
+            <h3>Freemium Model with Clear Value Tiers</h3>
+            
+            <!-- Desktop Table -->
+            <div class="table-container">
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Price</th>
+                            <th>Features</th>
+                            <th>Target Users</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>StarterSight (Free)</strong></td>
+                            <td>$0</td>
+                            <td>2 account links, basic dashboard, 1 sector analysis, limited AI explanations</td>
+                            <td>Novice investors exploring the platform</td>
+                        </tr>
+                        <tr>
+                            <td><strong>InvestSmart (Core)</strong></td>
+                            <td>$5-10/month</td>
+                            <td>Unlimited accounts, all sectors, full AI guidance, portfolio tracking</td>
+                            <td>Active investors seeking personalization</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WealthPro (Premium)</strong></td>
+                            <td>$15-25/month</td>
+                            <td>Advanced analytics, tax optimization, priority support, future: human advisors</td>
+                            <td>High-value users, sophisticated investors</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Mobile Cards -->
+            <div class="mobile-table-card">
+                <div class="card-header">StarterSight (Free)</div>
+                <div class="card-row">
+                    <div class="card-label">Price:</div>
+                    <div class="card-value">$0</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Features:</div>
+                    <div class="card-value">2 account links, basic dashboard, 1 sector analysis, limited AI explanations</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Target Users:</div>
+                    <div class="card-value">Novice investors exploring the platform</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">InvestSmart (Core)</div>
+                <div class="card-row">
+                    <div class="card-label">Price:</div>
+                    <div class="card-value">$5-10/month</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Features:</div>
+                    <div class="card-value">Unlimited accounts, all sectors, full AI guidance, portfolio tracking</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Target Users:</div>
+                    <div class="card-value">Active investors seeking personalization</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">WealthPro (Premium)</div>
+                <div class="card-row">
+                    <div class="card-label">Price:</div>
+                    <div class="card-value">$15-25/month</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Features:</div>
+                    <div class="card-value">Advanced analytics, tax optimization, priority support, future: human advisors</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Target Users:</div>
+                    <div class="card-value">High-value users, sophisticated investors</div>
+                </div>
+            </div>
+            
+            <h3>Revenue Projections</h3>
+            <ul>
+                <li><strong>Year 1:</strong> 100,000 users, 15% conversion to paid = $1.2M ARR</li>
+                <li><strong>Year 2:</strong> 500,000 users, 20% conversion = $8M ARR</li>
+                <li><strong>Year 3:</strong> 1.5M users, 25% conversion = $30M ARR</li>
+            </ul>
+            
+            <p><em>Additional revenue streams: Premium data feeds, institutional partnerships, embedded finance commissions</em></p>
+        </section>
+        
+        <!-- Call to Action -->
+        <div class="cta">
+            <h2>Join Us in Revolutionizing Personal Finance</h2>
+            <p>We're building the future of AI-powered financial guidance. With a massive market opportunity, clear product-market fit, and innovative technology, we're positioned to capture significant market share in the rapidly growing fintech space.</p>
+            <a href="#" class="cta-button">Schedule Investment Discussion</a>
+        </div>
+        
+        <!-- Key Takeaways -->
+        <section class="section">
+            <h2>Investment Highlights</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>6x</h3>
+                    <p>Market Growth Potential</p>
+                </div>
+                <div class="metric-card">
+                    <h3>3</h3>
+                    <p>Distinct User Segments</p>
+                </div>
+                <div class="metric-card">
+                    <h3>70%</h3>
+                    <p>Users Want Better Tools</p>
+                </div>
+                <div class="metric-card">
+                    <h3>$30M</h3>
+                    <p>Projected Year 3 ARR</p>
+                </div>
+            </div>
+            
+            <h3>Why This Opportunity is Unique</h3>
+            <ul>
+                <li><strong>Perfect Timing:</strong> AI/LLM technology maturity meets massive market demand</li>
+                <li><strong>Clear Gap:</strong> No competitor offers sophisticated analysis with true accessibility</li>
+                <li><strong>Proven Need:</strong> Extensive user research validates every feature</li>
+                <li><strong>Scalable Model:</strong> SaaS economics with high margins and low CAC</li>
+                <li><strong>Defensible Position:</strong> Proprietary AI implementation and user data network effects</li>
+            </ul>
+            
+            <h3>De-risked Approach</h3>
+            <ul>
+                <li>MVP focuses on validated, high-value features only</li>
+                <li>Freemium model ensures rapid user acquisition</li>
+                <li>Phased rollout allows for iteration based on user feedback</li>
+                <li>Strong emphasis on compliance and security from day one</li>
+            </ul>
+        </section>
+        
+        <!-- Risk Mitigation -->
+        <section class="section">
+            <h2>Risk Analysis & Mitigation</h2>
+            
+            <!-- Desktop Table -->
+            <div class="table-container">
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>Risk Factor</th>
+                            <th>Impact</th>
+                            <th>Mitigation Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Regulatory Compliance</strong></td>
+                            <td>High</td>
+                            <td>Legal team engaged, not providing direct advice initially, clear disclaimers, registration pathway planned</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Accuracy/Trust</strong></td>
+                            <td>Medium</td>
+                            <td>Explainable AI focus, human oversight, conservative recommendations, continuous improvement</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Competition</strong></td>
+                            <td>Medium</td>
+                            <td>Unique positioning, rapid innovation, strong user experience, network effects</td>
+                        </tr>
+                        <tr>
+                            <td><strong>User Acquisition</strong></td>
+                            <td>Low</td>
+                            <td>Freemium model, viral features, content marketing, influencer partnerships</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Technical Complexity</strong></td>
+                            <td>Low</td>
+                            <td>Experienced team, proven tech stack, phased development, cloud infrastructure</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Mobile Cards -->
+            <div class="mobile-table-card">
+                <div class="card-header">Regulatory Compliance</div>
+                <div class="card-row">
+                    <div class="card-label">Impact:</div>
+                    <div class="card-value">High</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Mitigation:</div>
+                    <div class="card-value">Legal team engaged, not providing direct advice initially, clear disclaimers, registration pathway planned</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">AI Accuracy/Trust</div>
+                <div class="card-row">
+                    <div class="card-label">Impact:</div>
+                    <div class="card-value">Medium</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Mitigation:</div>
+                    <div class="card-value">Explainable AI focus, human oversight, conservative recommendations, continuous improvement</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">Competition</div>
+                <div class="card-row">
+                    <div class="card-label">Impact:</div>
+                    <div class="card-value">Medium</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Mitigation:</div>
+                    <div class="card-value">Unique positioning, rapid innovation, strong user experience, network effects</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">User Acquisition</div>
+                <div class="card-row">
+                    <div class="card-label">Impact:</div>
+                    <div class="card-value">Low</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Mitigation:</div>
+                    <div class="card-value">Freemium model, viral features, content marketing, influencer partnerships</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">Technical Complexity</div>
+                <div class="card-row">
+                    <div class="card-label">Impact:</div>
+                    <div class="card-value">Low</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Mitigation:</div>
+                    <div class="card-value">Experienced team, proven tech stack, phased development, cloud infrastructure</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team & Execution -->
+        <section class="section">
+            <h2>Execution Strategy</h2>
+            
+            <h3>Development Timeline</h3>
+            <div class="highlight-box">
+                <h4>6-Month MVP Sprint</h4>
+                <ul>
+                    <li><strong>Months 1-2:</strong> Core infrastructure, user authentication, Plaid integration</li>
+                    <li><strong>Months 2-4:</strong> AI/LLM implementation, sector analysis engine, portfolio analytics</li>
+                    <li><strong>Months 4-5:</strong> UI/UX polish, "Explain the Why" feature, testing</li>
+                    <li><strong>Month 6:</strong> Beta launch with 1,000 users, iteration based on feedback</li>
+                </ul>
+            </div>
+            
+            <h3>Go-to-Market Strategy</h3>
+            <ol>
+                <li><strong>Content Marketing:</strong> SEO-optimized educational content targeting our personas</li>
+                <li><strong>Social Proof:</strong> Beta user testimonials and case studies</li>
+                <li><strong>Influencer Partnerships:</strong> Collaborate with FinTok creators and investment educators</li>
+                <li><strong>Freemium Funnel:</strong> Free tier drives organic growth and word-of-mouth</li>
+                <li><strong>B2B2C Opportunities:</strong> Partner with employers for financial wellness programs</li>
+            </ol>
+            
+            <h3>Success Metrics</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>10%</h3>
+                    <p>Month-over-month user growth</p>
+                </div>
+                <div class="metric-card">
+                    <h3>15%</h3>
+                    <p>Free to paid conversion</p>
+                </div>
+                <div class="metric-card">
+                    <h3>< $50</h3>
+                    <p>Customer acquisition cost</p>
+                </div>
+                <div class="metric-card">
+                    <h3>> 40%</h3>
+                    <p>Monthly active users</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Competitive Advantages -->
+        <section class="section">
+            <h2>Sustainable Competitive Advantages</h2>
+            
+            <div class="opportunity-grid">
+                <div class="opportunity-card">
+                    <h4>1. Technology Moat</h4>
+                    <p>Proprietary LLM fine-tuning for financial contexts, creating increasingly accurate and personalized recommendations as we scale.</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>2. Data Network Effects</h4>
+                    <p>Each user interaction improves our AI models, creating better recommendations for all users and increasing switching costs.</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>3. Trust & Brand</h4>
+                    <p>Explainable AI and educational focus builds deep user trust, creating a defensible brand position in a sensitive market.</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>4. Ecosystem Lock-in</h4>
+                    <p>As users link more accounts and build history, switching costs increase significantly.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Financial Projections -->
+        <section class="section">
+            <h2>Financial Projections & Investment Terms</h2>
+            
+            <h3>5-Year Financial Forecast</h3>
+            <div class="table-container">
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Year 1</th>
+                            <th>Year 2</th>
+                            <th>Year 3</th>
+                            <th>Year 4</th>
+                            <th>Year 5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Users</strong></td>
+                            <td>100K</td>
+                            <td>500K</td>
+                            <td>1.5M</td>
+                            <td>3M</td>
+                            <td>5M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Paid Users</strong></td>
+                            <td>15K</td>
+                            <td>100K</td>
+                            <td>375K</td>
+                            <td>900K</td>
+                            <td>1.75M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ARR</strong></td>
+                            <td>$1.2M</td>
+                            <td>$8M</td>
+                            <td>$30M</td>
+                            <td>$72M</td>
+                            <td>$140M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gross Margin</strong></td>
+                            <td>70%</td>
+                            <td>75%</td>
+                            <td>80%</td>
+                            <td>82%</td>
+                            <td>85%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EBITDA</strong></td>
+                            <td>-$2M</td>
+                            <td>-$1M</td>
+                            <td>$5M</td>
+                            <td>$20M</td>
+                            <td>$50M</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Mobile Cards for Financial Projections -->
+            <div class="mobile-table-card">
+                <div class="card-header">Total Users</div>
+                <div class="card-row">
+                    <div class="card-label">Year 1:</div>
+                    <div class="card-value">100K</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 2:</div>
+                    <div class="card-value">500K</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 3:</div>
+                    <div class="card-value">1.5M</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 4:</div>
+                    <div class="card-value">3M</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 5:</div>
+                    <div class="card-value">5M</div>
+                </div>
+            </div>
+            
+            <div class="mobile-table-card">
+                <div class="card-header">Annual Recurring Revenue (ARR)</div>
+                <div class="card-row">
+                    <div class="card-label">Year 1:</div>
+                    <div class="card-value">$1.2M</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 2:</div>
+                    <div class="card-value">$8M</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 3:</div>
+                    <div class="card-value">$30M</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 4:</div>
+                    <div class="card-value">$72M</div>
+                </div>
+                <div class="card-row">
+                    <div class="card-label">Year 5:</div>
+                    <div class="card-value">$140M</div>
+                </div>
+            </div>
+            
+            <h3>Investment Opportunity</h3>
+            <div class="highlight-box">
+                <h4>Series A Funding Round</h4>
+                <ul>
+                    <li><strong>Seeking:</strong> $10M Series A funding</li>
+                    <li><strong>Valuation:</strong> $40M pre-money</li>
+                    <li><strong>Use of Funds:</strong>
+                        <ul>
+                            <li>40% - Product development & AI/LLM infrastructure</li>
+                            <li>30% - Go-to-market & user acquisition</li>
+                            <li>20% - Team expansion (engineering, data science, finance experts)</li>
+                            <li>10% - Regulatory compliance & security</li>
+                        </ul>
+                    </li>
+                    <li><strong>Expected ROI:</strong> 10x+ within 5 years based on comparable exits</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Exit Strategy -->
+        <section class="section">
+            <h2>Exit Strategy & Comparables</h2>
+            
+            <h3>Recent Comparable Exits</h3>
+            <ul>
+                <li><strong>Personal Capital → Empower:</strong> Acquired for $1B at ~10x revenue</li>
+                <li><strong>Credit Karma → Intuit:</strong> $7.1B acquisition at ~14x revenue</li>
+                <li><strong>Mint → Intuit:</strong> $170M at early stage (would be $1B+ today)</li>
+                <li><strong>Plaid → Visa:</strong> $5.3B attempted acquisition</li>
+            </ul>
+            
+            <h3>Strategic Acquirers</h3>
+            <div class="opportunity-grid">
+                <div class="opportunity-card">
+                    <h4>Financial Institutions</h4>
+                    <p>Banks and brokerages seeking next-gen digital capabilities and younger demographics</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>Tech Giants</h4>
+                    <p>Apple, Google, Amazon expanding financial services offerings</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>Fintech Leaders</h4>
+                    <p>PayPal, Block, Intuit looking for AI-driven advisory capabilities</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Conclusion -->
+        <section class="section">
+            <h2>Why Invest Now</h2>
+            
+            <div class="cta">
+                <h2>The Perfect Storm of Opportunity</h2>
+                <p>The convergence of AI technology maturity, massive market demand, and clear user needs creates an unprecedented opportunity. Our team has conducted extensive research, validated our approach with target users, and designed a solution that addresses real pain points with innovative technology.</p>
+                
+                <div class="metrics-grid" style="margin: 2rem 0;">
+                    <div class="metric-card">
+                        <h3>71%</h3>
+                        <p>of users want more personalized financial advice</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>$3T+</h3>
+                        <p>in assets managed by robo-advisors by 2025</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>82%</h3>
+                        <p>of millennials interested in AI-powered financial tools</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>2.5x</h3>
+                        <p>higher engagement with personalized features</p>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.3rem; margin: 2rem 0;">Join us in building the future of personal finance. Together, we'll empower millions to make better financial decisions and achieve their dreams.</p>
+                
+                <a href="#" class="cta-button">Contact Us for Full Investment Deck</a>
+            </div>
+        </section>
+        
+        <!-- Appendix -->
+        <section class="section">
+            <h2>Appendix: Research Methodology</h2>
+            
+            <p>Our product development follows a rigorous Design Thinking methodology:</p>
+            
+            <ol>
+                <li><strong>User & Market Deep Dive:</strong> Analyzed 100+ sources, identified 6 key user segments, mapped competitive landscape</li>
+                <li><strong>Problem Definition:</strong> Developed detailed personas, validated pain points through user research</li>
+                <li><strong>Ideation & Features:</strong> Generated 200+ feature ideas, prioritized based on user value and technical feasibility</li>
+                <li><strong>Prototype Design:</strong> Created user journeys, wireframes, and LLM interaction flows</li>
+                <li><strong>User Testing Plan:</strong> Structured approach to validate assumptions with target users</li>
+                <li><strong>MVP Roadmap:</strong> Phased approach balancing user value with development complexity</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <h4>Key Research Findings</h4>
+                <ul>
+                    <li>Users juggle 15-20 different financial service providers</li>
+                    <li>70% report frustration with apps that don't provide clear next steps</li>
+                    <li>Information overload is the #1 complaint among DIY investors</li>
+                    <li>Trust in AI increases 3x when explanations are provided</li>
+                    <li>Personalized features drive 2.5x higher engagement</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer style="background: #2c3e50; color: white; padding: 2rem; text-align: center; margin-top: 3rem;">
+        <p>&copy; 2025 Personal Finance & Investment Advisor App. Confidential Investment Opportunity.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">This document contains proprietary information and is intended solely for potential investors.</p>
+    </footer>
+    
+    <!-- JavaScript for Navigation and Mobile Experience -->
+    <script>
+        // Toggle mobile navigation
+        function toggleNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').slice(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                
+                // Update active nav item
+                document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Close mobile menu if open
+                const hamburger = document.querySelector('.hamburger');
+                const navMenu = document.getElementById('navMenu');
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Update active nav item on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.getElementById('navMenu');
+            const navContainer = document.querySelector('.nav-container');
+            
+            if (!navContainer.contains(event.target) && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (window.innerWidth > 768) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
